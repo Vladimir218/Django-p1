@@ -54,9 +54,10 @@ def profile(request):
         form = UserProfileForm(data=request.POST,instance=request.user,files=request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request,'Форма пользователя успешно сохранена')
             return HttpResponseRedirect(reverse('users:profile'))
         else:
-            print(form.errors)
+            messages.error(request,form.errors)
 
     context = {
         'title': 'Geekshop - Профайл',
