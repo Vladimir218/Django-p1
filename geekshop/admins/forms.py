@@ -1,5 +1,7 @@
 from django import forms
+from django.forms import ModelForm
 
+from mainapp.models import ProductCategory
 from users.forms import UserRegisterForm, UserProfileForm
 from users.models import User
 
@@ -19,6 +21,15 @@ class UserAdminRegisterForm(UserRegisterForm):
                 field.widget.attrs['class'] = 'form-control'
             else:
                 field.widget.attrs['class'] = 'form-control py-4'
+
+class CategoryAdminRegisterForm(ModelForm):
+    class Meta:
+        model = ProductCategory
+        fields = ('name', 'description')
+
+    def __init__(self, *args, **kwargs):
+        super(CategoryAdminRegisterForm, self).__init__(*args, **kwargs)
+
 
 class UserAdminProfileForm(UserProfileForm):
 
