@@ -15,7 +15,7 @@ def index(request):
     return render(request, 'mainapp/index.html', context=content)
 
 
-def products(request):
+def products(request,category_id = None):
     # catalog_path = os.path.join(CURENT_DIR, 'fixtures/catalog.json')
     # with open(catalog_path, 'r', encoding='utf-8') as f:
     #     content = {
@@ -23,7 +23,7 @@ def products(request):
     #         'things': json.load(f)
     #     }
     title ='каталог'
-    products = Product.objects.all()
+    products = Product.objects.filter(category_id = category_id)  if category_id != None else Product.objects.all()
     productsCategory = ProductCategory.objects.all()
     content = {'title':title, 'things':products, 'categores':productsCategory}
     return render(request, 'mainapp/products.html', context=content)
