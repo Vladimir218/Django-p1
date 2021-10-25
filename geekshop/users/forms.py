@@ -7,10 +7,10 @@ from users.models import User
 class UserLoginForm(AuthenticationForm):
     class Meta:
         model = User
-        fields = ('login', 'password')
+        fields = ('username', 'password')
 
     def __init__(self, *args, **kwargs):
-        super(UserLoginForm, self).__init__(self, *args, **kwargs)
+        super(UserLoginForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['placeholder'] = 'Введите имя пользователя'
         self.fields['password'].widget.attrs['placeholder'] = 'Введите пароль'
         for field_name, field in self.fields.items():
@@ -52,6 +52,6 @@ class UserProfileForm(UserChangeForm):
 
     def clean_image(self):
         data = self.cleaned_data['image']
-        if data.size > 1024000:
+        if data.size > 1024*1024:
             raise forms.ValidationError('Файл слишком большой')
         return data
